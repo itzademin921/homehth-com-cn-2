@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://itzademin921.github.io/homehth-com-cn-2/sitemap.xml

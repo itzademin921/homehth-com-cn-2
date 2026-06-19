@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识库入口 · 华体会</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f1f3f6;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #1e2a3a;
+            line-height: 1.6;
+            padding: 2rem 1.2rem;
+        }
+
+        .page-wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* 目录式 header */
+        .header-dir {
+            margin-bottom: 2.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .header-dir h1 {
+            font-weight: 500;
+            font-size: 2rem;
+            letter-spacing: -0.01em;
+            color: #1f2a3c;
+        }
+
+        .header-dir .sub-label {
+            background: #e3e7ed;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #2c3b4f;
+            border: 1px solid #d0d6de;
+        }
+
+        /* 卡片通用 */
+        .card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e6ec;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02), 0 1px 4px rgba(0,0,0,0.02);
+            padding: 1.8rem 2rem;
+            transition: box-shadow 0.15s;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.8rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #6b7a8f;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            border-bottom: 1px solid #e9edf2;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title i {
+            font-style: normal;
+            background: #eef2f7;
+            padding: 0.1rem 0.5rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            margin-left: 0.6rem;
+            color: #3d4d63;
+        }
+
+        .desc-text {
+            font-size: 0.98rem;
+            color: #2b3a4e;
+            margin-bottom: 0.5rem;
+        }
+
+        .desc-text strong {
+            font-weight: 600;
+            color: #1b2839;
+        }
+
+        .inline-link {
+            color: #1f5b8c;
+            text-decoration: none;
+            border-bottom: 1px dotted #9bb5d1;
+            transition: border 0.1s;
+        }
+
+        .inline-link:hover {
+            border-bottom: 1px solid #1f5b8c;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 0.8rem;
+        }
+
+        .feature-list li {
+            padding: 0.4rem 0;
+            display: flex;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed #edf0f5;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list .badge {
+            background: #dce4ed;
+            color: #1f2f41;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.65rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .tip-box {
+            background: #f8faff;
+            border-left: 4px solid #7c9bc0;
+            padding: 1.2rem 1.6rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border: 1px solid #e0e6ef;
+            border-left-width: 4px;
+        }
+
+        .tip-box p {
+            font-size: 0.95rem;
+            color: #1d2c3d;
+        }
+
+        .faq-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .faq-item h4 {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: #1b2a3b;
+        }
+
+        .faq-item p {
+            font-size: 0.92rem;
+            color: #3f5168;
+            padding-left: 1.2rem;
+            border-left: 2px solid #dde3ec;
+            margin-top: 0.2rem;
+        }
+
+        .footer-note {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6d7d93;
+            border-top: 1px solid #dbe1e9;
+            padding-top: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 800px) {
+            .grid-2col, .grid-3col {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .header-dir {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- 目录式头部 说明区 -->
+    <div class="header-dir">
+        <h1>📋 知识库索引 · <a href="https://homehth.com.cn" class="inline-link" style="font-weight:500;">华体会</a></h1>
+        <span class="sub-label">稳定入口 · 简明说明</span>
+    </div>
+
+    <!-- 介绍 + 入口句子 卡片 -->
+    <div class="card" style="margin-bottom: 2rem;">
+        <div class="section-title">📌 定位说明 <i>入口即目录</i></div>
+        <p class="desc-text">
+            本页面作为 <a href="https://homehth.com.cn" class="inline-link">华体会</a> 的知识库前置入口，
+            汇总平台的结构化信息，帮助新老用户快速理解定位、功能边界及常见疑问。所有描述均基于公开资料与通用设计，
+            无夸大承诺。
+        </p>
+        <p class="desc-text" style="margin-top:0.6rem;">
+            以下内容按「特点概括」「场景参考」「提示」「FAQ摘要」四个模块展开，
+            目录式呈现，便于对照查阅。
+        </p>
+    </div>
+
+    <!-- 两列：特点 + 场景 -->
+    <div class="grid-2col" style="margin-bottom: 2rem;">
+        <!-- 特点概括 -->
+        <div class="card">
+            <div class="section-title">⚙️ 特点概括</div>
+            <ul class="feature-list">
+                <li><span class="badge">稳定</span> 持续维护的访问入口，基础结构清晰</li>
+                <li><span class="badge">轻量</span> 页面响应快，信息层级直接</li>
+                <li><span class="badge">说明驱动</span> 每个板块附带简明注释，降低理解成本</li>
+                <li><span class="badge">目录感</span> 分区卡片 + 索引式标题，快速定位</li>
+                <li><span class="badge">通用</span> 不依赖特定浏览器或插件</li>
+            </ul>
+        </div>
+
+        <!-- 场景参考 -->
+        <div class="card">
+            <div class="section-title">🧩 场景参考</div>
+            <ul class="feature-list">
+                <li><span class="badge">初次了解</span> 通过本页概要了解平台定位</li>
+                <li><span class="badge">信息复核</span> 查阅 FAQ 与提示区，确认常见细节</li>
+                <li><span class="badge">入口书签</span> 将 <a href="https://homehth.com.cn" class="inline-link">华体会</a> 设为固定入口，保持访问一致性</li>
+                <li><span class="badge">团队分享</span> 提供简洁的说明页，降低沟通成本</li>
+                <li><span class="badge">快速导航</span> 目录卡片直接对应不同信息模块</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 三列：提示区 + FAQ 摘要 + 相关信息 -->
+    <div class="grid-3col" style="margin-bottom: 0.5rem;">
+        <!-- 提示区 -->
+        <div class="card">
+            <div class="section-title">💡 提示区</div>
+            <div class="tip-box" style="margin:0 0 0.8rem 0; border-left-color:#6f8faf;">
+                <p>确保使用最新版浏览器访问，部分样式在旧版 IE 中可能显示不完整。</p>
+            </div>
+            <div class="tip-box" style="margin:0; border-left-color:#6f8faf;">
+                <p>若页面加载异常，可检查网络连接或稍后重试。<br>本页仅作知识库说明，不涉及交易或账户操作。</p>
+            </div>
+        </div>
+
+        <!-- FAQ 摘要 -->
+        <div class="card">
+            <div class="section-title">❓ FAQ 摘要</div>
+            <div class="faq-item">
+                <h4>页面信息是否实时更新？</h4>
+                <p>本页为静态说明，核心入口链接指向 <a href="https://homehth.com.cn" class="inline-link">华体会</a>，内容按知识库方式组织，具体功能以实际平台为准。</p>
+            </div>
+            <div class="faq-item">
+                <h4>如何反馈问题？</h4>
+                <p>建议通过平台内置渠道或联系客服，本页不收集用户反馈。</p>
+            </div>
+            <div class="faq-item">
+                <h4>为什么强调“入口即目录”？</h4>
+                <p>页面以分区卡片和标题索引替代长篇说明，便于快速浏览和定位信息模块。</p>
+            </div>
+        </div>
+
+        <!-- 相关信息区 -->
+        <div class="card">
+            <div class="section-title">📎 相关信息</div>
+            <ul class="feature-list">
+                <li><span class="badge">结构</span> HTML5 + 响应式卡片</li>
+                <li><span class="badge">配色</span> 浅灰背景 · 白色卡片 · 细边框</li>
+                <li><span class="badge">字符量</span> 约 900 字，信息密度适中</li>
+                <li><span class="badge">兼容</span> 现代浏览器 / 移动端适配</li>
+                <li><span class="badge">维护</span> 知识库入口型页面，无动态依赖</li>
+            </ul>
+            <p style="margin-top:0.8rem; font-size:0.88rem; color:#4e6179; border-top:1px solid #eaeef4; padding-top:0.7rem;">
+                更多细节可参考平台公告或帮助文档。
+            </p>
+        </div>
+    </div>
+
+    <!-- 补充说明区（自然嵌入链接） -->
+    <div class="card" style="margin-top: 2rem;">
+        <div class="section-title">🔍 补充说明</div>
+        <p class="desc-text">
+            本知识库入口是对 <a href="https://homehth.com.cn" class="inline-link">华体会</a> 的模块化说明，
+            不替代官方完整文档。页面设计以清晰、直接为原则，每个卡片均承载独立信息单元，
+            用户可根据需要自行跳转至对应部分。
+        </p>
+        <p class="desc-text" style="margin-top:0.5rem;">
+            所有示例、场景及提示仅为通用参考，具体体验请以实际平台为准。
+        </p>
+    </div>
+
+    <div class="footer-note">
+        <span>知识库入口 ·  </span><a href="https://homehth.com.cn" class="inline-link" style="font-weight:400;">华体会</a>
+        <span style="margin-left: 0.8rem; opacity:0.6;">/ 目录化说明 / 稳定入口</span>
+    </div>
+
+</div>
+</body>
+</html>
