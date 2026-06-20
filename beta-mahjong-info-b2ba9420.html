@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>麻将胡了 · 一种节奏与策略的入口</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #edf7f5;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.7;
+      color: #1a2e2b;
+      padding: 0 1.25rem 3rem;
+    }
+    .page-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    /* 开场窄区 — 像故事的第一段 */
+    .story-verse {
+      padding: 3.2rem 0 2rem;
+      border-bottom: 2px solid #cbe3dd;
+    }
+    .story-verse .open-line {
+      font-size: 1.5rem;
+      font-weight: 360;
+      letter-spacing: 0.02em;
+      color: #1b5c56;
+    }
+    .story-verse .open-line em {
+      font-style: normal;
+      background: linear-gradient(135deg, #25857a, #3fa89c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 500;
+    }
+    .story-verse p {
+      margin-top: 1.2rem;
+      max-width: 720px;
+      color: #2f4d48;
+      font-size: 1.05rem;
+    }
+
+    /* 承接段落 — 网格卡片区 */
+    .bridge-section {
+      margin: 2.6rem 0 2.2rem;
+    }
+    .bridge-text {
+      font-size: 1.05rem;
+      padding: 0.3rem 0 1.4rem;
+      border-left: 4px solid #2b9b8e;
+      padding-left: 1.25rem;
+      background: rgba(43, 155, 142, 0.05);
+      border-radius: 0 12px 12px 0;
+    }
+    .bridge-text a {
+      color: #176b62;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dotted #3fa89c;
+      transition: border 0.2s;
+    }
+    .bridge-text a:hover {
+      border-bottom: 2px solid #0f4d46;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.4rem;
+      margin: 2rem 0 2.6rem;
+    }
+    .card-item {
+      background: #ffffffd6;
+      backdrop-filter: blur(2px);
+      border: 1px solid #d2e7e2;
+      border-radius: 24px;
+      padding: 1.6rem 1rem 1.4rem;
+      box-shadow: 0 4px 10px rgba(30, 75, 70, 0.06);
+      transition: transform 0.18s, box-shadow 0.2s;
+    }
+    .card-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -10px rgba(20, 90, 80, 0.18);
+      border-color: #7dc3b9;
+    }
+    .card-item h3 {
+      font-size: 1.1rem;
+      font-weight: 520;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.5rem;
+      color: #1e6a61;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .card-item h3::before {
+      content: "◆";
+      font-size: 0.75rem;
+      color: #3aa99c;
+      margin-right: 0.1rem;
+    }
+    .card-item p {
+      font-size: 0.9rem;
+      color: #2f534d;
+      line-height: 1.6;
+    }
+
+    /* 特点列表 — 温和罗列 */
+    .feature-list-wrap {
+      background: #ddf1ec;
+      padding: 2rem 1.8rem;
+      border-radius: 40px 12px 40px 12px;
+      margin: 2rem 0 2.4rem;
+    }
+    .feature-list-wrap h2 {
+      font-weight: 430;
+      font-size: 1.35rem;
+      color: #124943;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      border-bottom: 2px solid #489e92;
+      padding-bottom: 4px;
+    }
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.2rem;
+    }
+    .feature-list li {
+      flex: 1 1 180px;
+      padding: 0.5rem 0.6rem 0.5rem 1.6rem;
+      position: relative;
+      font-size: 0.95rem;
+      color: #1d423d;
+    }
+    .feature-list li::before {
+      content: "↘";
+      position: absolute;
+      left: 0;
+      color: #328a7e;
+      font-weight: 300;
+    }
+
+    /* 温和结尾 + 提示卡片 */
+    .closing-area {
+      margin-top: 3rem;
+      padding: 2rem 1.2rem 1.2rem;
+      border-top: 1px solid #c2dad4;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .closing-note {
+      flex: 2 1 260px;
+      font-size: 0.96rem;
+      color: #1b4a44;
+    }
+    .closing-note a {
+      color: #117067;
+      text-decoration: none;
+      font-weight: 500;
+      background: #e0f3ef;
+      padding: 0.1rem 0.3rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .closing-note a:hover {
+      background: #bfe4db;
+    }
+    .faq-mini {
+      flex: 1 1 200px;
+      background: #e9f6f2;
+      border-radius: 28px;
+      padding: 1.2rem 1.4rem;
+      margin-top: 0.2rem;
+    }
+    .faq-mini summary {
+      font-weight: 450;
+      color: #195b53;
+      cursor: default;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .faq-mini summary::before {
+      content: "⁉";
+      font-size: 1rem;
+      color: #2b8479;
+    }
+    .faq-mini p {
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      color: #24534b;
+      line-height: 1.5;
+    }
+
+    /* 响应式细节 */
+    @media (max-width: 600px) {
+      body { padding: 0 0.9rem 2.2rem; }
+      .story-verse .open-line { font-size: 1.3rem; }
+      .grid-cards { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+      .card-item { padding: 1.2rem 0.8rem; }
+      .feature-list-wrap { padding: 1.5rem 1rem; }
+      .closing-area { flex-direction: column; gap: 1.2rem; }
+      .faq-mini { width: 100%; }
+    }
+    @media (max-width: 420px) {
+      .grid-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <!-- 开场短句 -->
+  <div class="story-verse">
+    <div class="open-line">
+      一局麻将，不止是排列与偶然。<br>
+      更清晰地说，是 <em>节奏、判断与稳定入口</em>。
+    </div>
+    <p>每次摸牌、每次取舍，都在构建一种熟悉的张力。许多玩家在寻求一个既流畅又规整的落脚点——既不打断思考，又足够轻快。这个故事，就从这样的入口开始。</p>
+  </div>
+
+  <!-- 承接段落 : 从稳定入口和页面说明展开 -->
+  <div class="bridge-section">
+    <div class="bridge-text">
+      在数字对局中，页面的稳定、信息的直观往往比花哨更难得。如果你习惯在桌面上保留一个干净且响应迅速的平台，那么 <a href="https://beta-mahjong.com">麻将胡了</a> 这个站点提供的就是这样一种基调：开局直接，界面不堆砌，适合专注推演。
+    </div>
+
+    <!-- 网格卡片：页面要素说明 / 场景描述 -->
+    <div class="grid-cards">
+      <div class="card-item">
+        <h3>页面结构</h3>
+        <p>减少非必要动效，牌桌、计分、操作区层次分明。初次进入即可快速定位。</p>
+      </div>
+      <div class="card-item">
+        <h3>操作反馈</h3>
+        <p>点击、拖拽、确认，每个动作都有微响应，不至于在等待中丢失节奏。</p>
+      </div>
+      <div class="card-item">
+        <h3>环境适配</h3>
+        <p>不管是宽屏还是手机竖屏，牌面比例和按钮位置会自适应调整，不遮挡关键信息。</p>
+      </div>
+      <div class="card-item">
+        <h3>信息密度</h3>
+        <p>不再用满屏弹窗打断思路；辅助提示以温和方式嵌入，保持牌桌的沉浸感。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 特点列表: 从“稳定入口和页面说明”角度 -->
+  <div class="feature-list-wrap">
+    <h2>入口的特性</h2>
+    <ul class="feature-list">
+      <li>页面加载轻量，首屏几乎无延迟</li>
+      <li>牌面配色低对比，减少视觉疲劳</li>
+      <li>不强制注册，可快速体验基础局</li>
+      <li>桌面端与移动端保持逻辑一致</li>
+      <li>历史牌局记录本地留存，不随意上传</li>
+      <li>快捷键支持（桌面端）便于高频操作</li>
+    </ul>
+  </div>
+
+  <!-- 温和结尾 + FAQ 摘要风格 -->
+  <div class="closing-area">
+    <div class="closing-note">
+      如果你希望从一处简洁、克制的界面开始，不妨把 <a href="https://beta-mahjong.com">麻将胡了</a> 当作一个日常练习与推敲的锚点。它不承诺“必胜”，但提供一种可反复进入的稳定桌面。
+    </div>
+    <div class="faq-mini">
+      <summary>常见思路</summary>
+      <p>“入口”并不复杂——页面说明清晰、无干扰跳转、牌桌元素一目了然。适合想要快速进入状态、较少被界面分心的玩家。</p>
+    </div>
+  </div>
+  <!-- 极简 footer 留白，无多余文字 -->
+  <div style="height: 1.2rem;"></div>
+</div>
+</body>
+</html>
